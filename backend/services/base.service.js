@@ -28,8 +28,13 @@ class BaseService {
         return await this.respository.create(model)
     }
 
-    async update(id, model) {
+    async update(id, model){
         return await this.respository.update(id, model)
+    }
+
+    async delete(id){
+        const deletedCount = await this.respository.delete(id);
+        return deletedCount > 0
     }
 }
 

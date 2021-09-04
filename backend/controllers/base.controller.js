@@ -28,7 +28,7 @@ class BaseController {
     delete = async (req, res) => {
         const { id } = req.params;
         const deletedModel = await this.service.delete(id);
-        return res.send(deletedModel);
+        return res.status(200).send({deletedModel});
     }
 }
 

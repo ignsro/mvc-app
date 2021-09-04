@@ -7,6 +7,7 @@ module.exports = function({ ClientController }){
     router.get('/:id', ClientController.get)
     router.post('/', ClientController.create)
     router.put('/:id', ClientController.update)
+    router.delete('/:id', ClientController.delete)
     
     return router;
 }
