@@ -1,4 +1,5 @@
 module.exports = {
     ClientService: require('./client.service'),
-    ProductService: require('./product.service')
+    ProductService: require('./product.service'),
+    SaleService: require('./sale.service')
 }
