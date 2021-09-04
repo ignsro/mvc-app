@@ -20,7 +20,7 @@ class BaseController {
     }
 
     update = async (req, res) => {
-        const { body, params: { id } } = reqM
+        const { body, params: { id } } = req
         const updatedModel = await this.service.update(id, body);
         return res.send(updatedModel);
     }
@@ -32,4 +32,4 @@ class BaseController {
     }
 }
 
-export default BaseController;
+module.exports = BaseController;
