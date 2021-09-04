@@ -1,9 +1,11 @@
-import BaseController from './base.controller'
+const BaseController = require('./base.controller')
 
 class ClientController extends BaseController {
-    constructor({ ClientController }){
-        super(ClientController);
-        this.service = ClientController;
+    constructor({ ClientService }){
+        super(ClientService);
+        this.service = ClientService;
     }
 
 }
+
+module.exports = ClientController;
