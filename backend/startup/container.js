@@ -8,17 +8,17 @@ const app = require('.');
 const db = require('../models')
 
 //Repositories
-const { ClientRepository } = require('../repositories')
+const { ClientRepository, ProductRepository } = require('../repositories')
 
 //Services
-const { ClientService } = require('../services')
+const { ClientService, ProductService } = require('../services')
 
 //Controllers
-const { ClientController } = require('../controllers')
+const { ClientController, ProductController } = require('../controllers')
 
 //Routes
 const routes = require('../routes'); 
-const { ClientRoutes } = require('../routes/index.routes');
+const { ClientRoutes, ProductRoutes } = require('../routes/index.routes');
 
 const container = createContainer();
 
@@ -29,19 +29,24 @@ container
         config: asValue(config)
     })
     .register({
-        Client: asValue(db['Client'])
+        Client: asValue(db['Client']),
+        Product: asValue(db['Product'])
     })
     .register({
-        ClientRepository: asClass(ClientRepository).singleton()
+        ClientRepository: asClass(ClientRepository).singleton(),
+        ProductRepository: asClass(ProductRepository).singleton()
     })
     .register({
-        ClientService: asClass(ClientService).singleton()
+        ClientService: asClass(ClientService).singleton(),
+        ProductService: asClass(ProductService).singleton()
     })
     .register({
-        ClientController: asClass(ClientController.bind(ClientController)).singleton()
+        ClientController: asClass(ClientController.bind(ClientController)).singleton(),
+        ProductController: asClass(ProductController.bind(ProductController)).singleton()
     })
     .register({
-        ClientRoutes: asFunction(ClientRoutes).singleton()
+        ClientRoutes: asFunction(ClientRoutes).singleton(),
+        ProductRoutes: asFunction(ProductRoutes).singleton()
     });
 
 module.exports = container;

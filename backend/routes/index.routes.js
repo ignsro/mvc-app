@@ -1,5 +1,4 @@
-const Client_Routes = require('./client.routes')
-
 module.exports = {
-    ClientRoutes: Client_Routes
+    ClientRoutes: require('./client.routes'),
+    ProductRoutes: require('./product.routes')
 }

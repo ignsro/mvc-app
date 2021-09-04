@@ -1,3 +1,4 @@
 module.exports = {
-    ClientRepository: require('./client.repository')
+    ClientRepository: require('./client.repository'),
+    ProductRepository: require('./product.repository')
 }

@@ -5,7 +5,7 @@ const helmet = require("helmet")
 const { NotFoundMiddleware, ErrorMiddleware } = require("../middlewares")
 require('express-async-errors')
 
-module.exports  = function({ ClientRoutes }) {
+module.exports  = function({ ClientRoutes, ProductRoutes }) {
     const router = Router();
     const apiRoutes = express.Router();
 
@@ -15,6 +15,7 @@ module.exports  = function({ ClientRoutes }) {
         .use(helmet())
 
     apiRoutes.use("/client", ClientRoutes)
+    apiRoutes.use("/product", ProductRoutes)
 
     router.use("/v1/api", apiRoutes)
 
