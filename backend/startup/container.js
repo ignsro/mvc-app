@@ -8,10 +8,10 @@ const app = require('.');
 const db = require('../models')
 
 //Repositories
-const { ClientRepository, ProductRepository, SaleRepository } = require('../repositories')
+const { ClientRepository, ProductRepository, SaleRepository, DetailRepository } = require('../repositories')
 
 //Services
-const { ClientService, ProductService, SaleService } = require('../services')
+const { ClientService, ProductService, SaleService, DetailService } = require('../services')
 
 //Controllers
 const { ClientController, ProductController, SaleController } = require('../controllers')
@@ -31,17 +31,20 @@ container
     .register({
         Client: asValue(db['Client']),
         Product: asValue(db['Product']),
-        Sale: asValue(db['Sale'])
+        Sale: asValue(db['Sale']),
+        Detail: asValue(db['Detail'])
     })
     .register({
         ClientRepository: asClass(ClientRepository).singleton(),
         ProductRepository: asClass(ProductRepository).singleton(),
-        SaleRepository: asClass(SaleRepository).singleton()
+        SaleRepository: asClass(SaleRepository).singleton(),
+        DetailRepository: asClass(DetailRepository).singleton()
     })
     .register({
         ClientService: asClass(ClientService).singleton(),
         ProductService: asClass(ProductService).singleton(),
-        SaleService: asClass(SaleService).singleton()
+        SaleService: asClass(SaleService).singleton(),
+        DetailService: asClass(DetailService).singleton()
     })
     .register({
         ClientController: asClass(ClientController.bind(ClientController)).singleton(),
