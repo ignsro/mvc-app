@@ -1,5 +1,4 @@
 const BaseRepository = require('./base.repository')
-
 class SaleRepository extends BaseRepository {
     constructor({ Sale, Detail }){
         super(Sale)
