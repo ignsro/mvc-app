@@ -6,6 +6,8 @@ module.exports = function({ ProductController }) {
     router.get('/', ProductController.getAll)
     router.get('/:id', ProductController.get)
     router.post('/', ProductController.create)
+    router.put('/:id', ProductController.update)
+    router.delete('/:id', ProductController.delete)
 
     return router;
 }
