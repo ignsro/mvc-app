@@ -1,0 +1,43 @@
+<div class="registry-dialog">
+    <form [formGroup]="submitValues" (ngSubmit)="onSubmit()" class="form-container">
+        <mat-grid-list cols="2" rowHeight="100px">
+            <mat-grid-tile colspan="2">
+                <h3 mat-dialog-title>{{title}}</h3>
+            </mat-grid-tile>
+            <mat-grid-tile colspan="2">
+                <mat-form-field class="input-width" appearance="fill">
+                    <input formControlName="name" matInput placeholder="Nombre*">
+                    <mat-error *ngIf="f.name.invalid">Nombre requerido</mat-error>
+                </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile colspan="1">
+                <mat-form-field hintLabel="Precio*" appearance="fill" floatLabel="always">
+                    <mat-label>Precio</mat-label>
+                    <input class="example-right-align" type="number" #inputLastName formControlName="price" matInput placeholder="" value="0">
+                    <span matPrefix>$&nbsp;</span>
+                    <span matSuffix>.00</span>
+                    <mat-error *ngIf="f.price.invalid">Precio requerido</mat-error>
+                </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile colspan="1">
+                <mat-form-field hintLabel="Cantidad*" appearance="fill">
+                    <mat-label>Cantidad</mat-label>
+                    <input class="example-right-align" type="number" #inputLastName formControlName="quantity" matInput placeholder="0" value="">
+                    <span matSuffix> .ud&nbsp;</span>
+                    <mat-error *ngIf="f.quantity.invalid">Cantidad requerida</mat-error>
+                </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile colspan="1">
+                <mat-dialog-actions>
+                    <button class="btn-registry-submit" mat-raised-button color="warn" [mat-dialog-close] (click)="onReset()">Cerrar</button>
+                </mat-dialog-actions>
+            </mat-grid-tile>
+            <mat-grid-tile colspan="1">
+                <mat-dialog-actions>
+                    <button type="submit" class="btn-registry-submit" mat-raised-button color="primary">{{butonSubmitLabel}}</button>
+                </mat-dialog-actions>
+            </mat-grid-tile>
+            <mat-progress-spinner mode="determinate"></mat-progress-spinner>
+        </mat-grid-list>
+    </form>
+</div>

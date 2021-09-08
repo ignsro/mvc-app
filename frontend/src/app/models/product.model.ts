@@ -1,7 +1,8 @@
 export interface Product {
-    name: string,
+    id: number,
+    name?: string,
     price: number,
     quantity: number,
-    createdAt: Date,
-    updatedAt: Date
+    createdAt?: Date,
+    updatedAt?: Date
 }

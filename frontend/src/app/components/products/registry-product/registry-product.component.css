@@ -1,0 +1,21 @@
+.registry-dialog {
+    width: 550px;
+    height: 400px;
+}
+
+.input-width {
+    width: 100%;
+}
+
+.example-right-align {
+    text-align: right;
+}
+
+input.example-right-align::-webkit-outer-spin-button,
+input.example-right-align::-webkit-inner-spin-button {
+    display: none;
+}
+
+input.example-right-align {
+    -moz-appearance: textfield;
+}

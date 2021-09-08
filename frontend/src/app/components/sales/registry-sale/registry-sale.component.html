@@ -1,0 +1,89 @@
+<div class="registry-dialog">
+    <mat-grid-list cols="3" rowHeight="150px">
+        <form action="" [formGroup]="onSubmitData" (ngSubmit)="onSubmit()">
+            <mat-grid-tile colspan="3">
+                <h3>Registrar venta</h3>
+            </mat-grid-tile>
+            <mat-grid-tile colspan="1">
+                <mat-form-field appearance="fill">
+                    <mat-label>Cliente</mat-label>
+                    <mat-select formControlName="client_id">
+                        <mat-option *ngFor="let client of clientData" [value]="client.id">
+                            {{client.first_name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile colspan="1">
+                <mat-form-field appearance="fill">
+                    <mat-label>Descuento</mat-label>
+                    <input class="example-right-align" type="number" formControlName="discount" matInput placeholder="0" value="">
+                    <span matPrefix>$&nbsp;</span>
+                </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile colspan=1>
+            </mat-grid-tile>
+            <mat-grid-tile colspan="1">
+                <mat-form-field appearance="fill">
+                    <mat-label>Producto</mat-label>
+                    <mat-select [formControl]="nameProduct">
+                        <mat-option *ngFor="let product of productsData" [value]="product.id" [disabled]="checkDisabled(product.id)">
+                            {{product.name}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="nameProduct.invalid">Producto requerido</mat-error>
+                </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile colspan="1">
+                <mat-form-field appearance="fill">
+                    <mat-label>Cantidad</mat-label>
+                    <input #input max="maxQuantity" class="example-right-align" type="number" [formControl]="quantityProduct" matInput placeholder="0" value="">
+                    <span matSuffix> .ud&nbsp;</span>
+                    <mat-hint align="end">{{input.value || 0}}/{{maxQuantity}}</mat-hint>
+                    <mat-error *ngIf="quantityProduct.invalid">{{getErrorMessageQuantity()}}</mat-error>
+                </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile colspan="1">
+                <button type="button" mat-raised-button color="primary" (click)="addProduct()">Agregar producto</button>
+            </mat-grid-tile>
+            <mat-grid-tile colspan="3">
+                <table mat-table [dataSource]="detailsTable" class="mat-elevation-z8">
+                    <ng-container matColumnDef="name">
+                        <th mat-header-cell *matHeaderCellDef>Nombre</th>
+                        <td mat-cell *matCellDef="let detail"> {{detail.product_name}} </td>
+                        <td mat-footer-cell *matFooterCellDef> Total </td>
+                    </ng-container>
+                    <ng-container matColumnDef="quantity">
+                        <th mat-header-cell *matHeaderCellDef>Cantidad</th>
+                        <td mat-cell *matCellDef="let detail"> {{detail.quantity}} </td>
+                        <td mat-footer-cell *matFooterCellDef></td>
+
+                    </ng-container>
+                    <ng-container matColumnDef="subtotal">
+                        <th mat-header-cell *matHeaderCellDef>Subtotal</th>
+                        <td mat-cell *matCellDef="let detail"> {{ detail.subtotal | currency }} </td>
+                        <td mat-footer-cell *matFooterCellDef> {{ getTotalCost() | currency }} </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="detailsTableColumns"></tr>
+                    <tr mat-row *matRowDef="let myRowData; columns: detailsTableColumns"></tr>
+                    <tr mat-footer-row *matFooterRowDef="detailsTableColumns"></tr>
+
+                    <ng-container matColumnDef="actions">
+                        <th mat-header-cell *matHeaderCellDef>Acciones</th>
+                        <td mat-cell *matCellDef="let row; let ind = index">
+                            <button type="button" mat-icon-button (click)="removeDatailToTable(ind)"><mat-icon>clear</mat-icon></button>
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef></td>
+                    </ng-container>
+
+
+
+                </table>
+            </mat-grid-tile>
+            <mat-grid-tile colspan="3">
+                <button type="submit" mat-raised-button color="primary">Finalizar Venta</button>
+            </mat-grid-tile>
+        </form>
+    </mat-grid-list>
+</div>

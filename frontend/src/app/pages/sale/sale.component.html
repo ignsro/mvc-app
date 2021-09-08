@@ -1,0 +1,29 @@
+<div>
+    <h4>Ultimas ventas</h4>
+    <button class="btn-open-dialog" mat-raised-button color="accent" (click)="openDialog()">Nueva venta</button>
+    <mat-divider></mat-divider>
+    <table mat-table [dataSource]="dataTable" class="mat-elevation-z8">
+        <ng-container matColumnDef="sale_at">
+            <th mat-header-cell *matHeaderCellDef> Fecha </th>
+            <td mat-cell *matCellDef="let sale"> {{sale.sale_at}} </td>
+        </ng-container>
+        <ng-container matColumnDef="iva">
+            <th mat-header-cell *matHeaderCellDef> Iva </th>
+            <td mat-cell *matCellDef="let sale"> {{sale.iva}} </td>
+        </ng-container>
+        <ng-container matColumnDef="discount">
+            <th mat-header-cell *matHeaderCellDef> Descuento </th>
+            <td mat-cell *matCellDef="let sale"> {{sale.discount}} </td>
+        </ng-container>
+        <ng-container matColumnDef="total">
+            <th mat-header-cell *matHeaderCellDef> Total </th>
+            <td mat-cell *matCellDef="let sale"> {{sale.total}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="columns"></tr>
+        <tr mat-row *matRowDef="let myRowData; columns: columns"></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements">
+    </mat-paginator>
+    <mat-progress-spinner [mode]="'indeterminate'" *ngIf="loading$ | async "></mat-progress-spinner>
+</div>

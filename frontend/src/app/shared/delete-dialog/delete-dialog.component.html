@@ -1,0 +1,13 @@
+<div class="registry-dialog">
+    <mat-grid-list cols="2" rowHeight="100px">
+        <mat-grid-tile colspan="2">
+            <h3 mat-dialog-title>¿Esta seguro de eliminar?</h3>
+        </mat-grid-tile>
+        <mat-grid-tile colspan="1">
+            <button mat-button mat-raised-button color="warn" [mat-dialog-close]>Cancelar</button>
+        </mat-grid-tile>
+        <mat-grid-tile colspan="1">
+            <button type="button" mat-raised-button color="primary" (click)="onDelete()">Eliminar</button>
+        </mat-grid-tile>
+    </mat-grid-list>
+</div>

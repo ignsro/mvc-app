@@ -1,1 +1,31 @@
-<p>client works!</p>
+<div>
+    <h4>Lista de clientes</h4>
+    <button class="btn-open-dialog" mat-raised-button color="accent" (click)="openDialog()">Agregar cliente</button>
+    <table mat-table [dataSource]="dataTable" class="mat-elevation-z8">
+        <ng-container matColumnDef="first_name">
+            <th mat-header-cell *matHeaderCellDef> Nombre </th>
+            <td mat-cell *matCellDef="let client"> {{client.first_name}} </td>
+        </ng-container>
+        <ng-container matColumnDef="last_name">
+            <th mat-header-cell *matHeaderCellDef> Apellido </th>
+            <td mat-cell *matCellDef="let client"> {{client.last_name}} </td>
+        </ng-container>
+        <ng-container matColumnDef="state">
+            <th mat-header-cell *matHeaderCellDef> Estado </th>
+            <td mat-cell *matCellDef="let client"> {{client.stateLabel}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="columns"></tr>
+        <tr mat-row *matRowDef="let myRowData; columns: columns"></tr>
+
+        <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef> Acciones </th>
+            <td mat-cell *matCellDef="let row; let ind = index">
+                <button mat-button (click)="editClient(ind)">Editar</button>
+                <button mat-button (click)="deleteClient(ind)">Eliminar</button>
+            </td>
+        </ng-container>
+
+    </table>
+    <mat-progress-spinner [mode]="'indeterminate'" *ngIf="loading$ | async "></mat-progress-spinner>
+</div>
