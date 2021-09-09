@@ -33,3 +33,8 @@ h1.example-app-name {
 .main-router-container {
     padding: 0.5em;
 }
+
+.container-main {
+    height: 100%;
+    background-color: #C3C9E9;
+}

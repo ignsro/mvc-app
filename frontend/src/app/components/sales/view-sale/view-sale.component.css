@@ -1,0 +1,14 @@
+.dialog-view {
+    width: 900px;
+    height: auto;
+}
+
+table {
+    width: 100%;
+}
+
+.btn-large{
+    height: 50px!important;
+    width: 200px!important;
+    min-width: unset!important;
+}

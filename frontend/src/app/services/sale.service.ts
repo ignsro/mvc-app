@@ -20,8 +20,20 @@ export class SaleService {
     return this._http.get<Sale[]>(this._baseUrl + "/sale")
   }
 
+  get(id: string){
+    return this._http.get<Sale>(`${this._baseUrl}/sale/${id}`)
+  }
+
   createSale(data: any) {
     return this._http.post<Sale>(this._baseUrl + "/sale", data)
+  }
+
+  updateSale(id: any, data: any) {
+    return this._http.put(`${this._baseUrl}/sale/${id}`, data);
+  }
+
+  deleteSale(id:any) {
+    return this._http.delete(`${this._baseUrl}/sale/${id}`)
   }
 
 }

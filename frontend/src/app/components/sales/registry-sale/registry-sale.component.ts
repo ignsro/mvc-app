@@ -82,7 +82,8 @@ export class RegistrySaleComponent implements OnInit {
         product_name: currentProduct?.name, 
         quantity: this.quantityProduct.value,
         subtotal: subtotal, 
-        price: currentProduct?.price
+        price: currentProduct?.price,
+        Product: currentProduct
       }
       this.detailsTable = [...this.detailsTable, toTable]
       this._changeDetectorRef.detectChanges();
@@ -110,8 +111,9 @@ export class RegistrySaleComponent implements OnInit {
     if (this.onSubmitData.valid) {
       const data = {
         discount: this.onSubmitData.get('discount')?.value || 0,
-        client: this.onSubmitData.get('client_id')?.value,
-        details: this.detailsTable
+        client_id: this.onSubmitData.get('client_id')?.value,
+        details: this.detailsTable,
+        valid: this.onSubmitData.valid
       }
       this._matDialogRef.close(data)
     }

@@ -53,7 +53,7 @@ export class RegistryClientComponent implements OnInit {
   onSubmit(): void {
     this.submitted = true;
     if (this.submitValues.valid) {
-      this.matDialogRef.close({data: this.submitValues.value, valid: this.submitValues.valid, edit: this.onEdit, id: this.data.id });
+      this.matDialogRef.close({data: this.submitValues.value, valid: this.submitValues.valid, edit: this.onEdit, id: this.data?.id || null });
     }
   }
 

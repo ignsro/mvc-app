@@ -35,6 +35,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { DeleteDialogComponent } from './shared/delete-dialog/delete-dialog.component';
+import { ViewSaleComponent } from './components/sales/view-sale/view-sale.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { DeleteDialogComponent } from './shared/delete-dialog/delete-dialog.comp
     RegistrySaleComponent,
     RegistryClientComponent,
     RegistryProductComponent,
-    DeleteDialogComponent
+    DeleteDialogComponent,
+    ViewSaleComponent
   ],
   entryComponents:[
     RegistrySaleComponent,
