@@ -5,9 +5,10 @@ import { Product } from 'src/app/models/product.model';
 import { ClientService } from 'src/app/services/client.service';
 import { ProductService } from 'src/app/services/product.service';
 import { AbstractControl, FormBuilder, FormControl, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Detail } from 'src/app/models/detail.model';
+import { Sale } from 'src/app/models/sales.model';
 
 @Component({
   selector: 'app-registry-sale',
@@ -37,20 +38,35 @@ export class RegistrySaleComponent implements OnInit {
     client_id: ['', [Validators.required]]
   });
 
+  onEdit = false;
+  title = ""
+  butonSubmitLabel = ""
+
   constructor(
     private _clientService: ClientService,
     private _productService: ProductService,
     private _fb: FormBuilder,
     private _changeDetectorRef: ChangeDetectorRef,
     private _matDialogRef: MatDialogRef<RegistrySaleComponent>,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    @Inject(MAT_DIALOG_DATA) public data: Sale
   ) { }
   
 
   ngOnInit(): void {
+    if (this.data) {
+      this.onEdit = true;
+      this.onSubmitData.setValue({
+        client_id: this.data.Client?.id,
+        discount: this.data.discount || 0
+      })
+
+      this.detailsTable = this.data.Details!.map((x: Detail) => ({...x, product_name: x.Product!.name, quantityOld: x.quantity}))
+    }
+
     this._clientService.getClients()
     .subscribe((client: Client[]) => {
-      this.clientData = client.filter(x => x.first_name);
+      this.clientData = client.filter(x => x.state);
     })
 
     this._productService.getProducts()
@@ -66,6 +82,9 @@ export class RegistrySaleComponent implements OnInit {
       this.maxQuantity = this.productsData.find((x: Product) => x.id === valor)?.quantity || 0
       this.quantityProduct.updateValueAndValidity();
     })
+
+    this.title = this.onEdit ? "Editar Venta" : "Agregar Venta"
+    this.butonSubmitLabel = this.onEdit ? 'Actualizar' : 'Agregar'
   }
 
   get f(): { [key: string]: AbstractControl } {
@@ -103,9 +122,13 @@ export class RegistrySaleComponent implements OnInit {
     return this.detailsTable.some(x => x.product_id === id)
   }
 
+  checkDisabledClient(id: any) {
+
+  }
+
   onSubmit(): void {
     if (this.detailsTable.length <= 0) {
-      this.openSnackBar();
+      this.openSnackBar("No hay ningún producto en la tabla.");
     }
 
     if (this.onSubmitData.valid) {
@@ -113,14 +136,17 @@ export class RegistrySaleComponent implements OnInit {
         discount: this.onSubmitData.get('discount')?.value || 0,
         client_id: this.onSubmitData.get('client_id')?.value,
         details: this.detailsTable,
-        valid: this.onSubmitData.valid
+        valid: this.onSubmitData.valid,
+        Details: this.detailsTable
       }
-      this._matDialogRef.close(data)
+      this._matDialogRef.close({data: data, valid: this.onSubmitData.valid, edit: this.onEdit, id: this.data?.id || null})
     }
   }
 
-  openSnackBar() {
-    this._snackBar.open("No hay ningun producto en la tabla");
+  openSnackBar(msg: string) {
+    this._snackBar.open(msg, '', {
+      duration: 2000
+    });
   }
 
   removeDatailToTable(rowid: any){

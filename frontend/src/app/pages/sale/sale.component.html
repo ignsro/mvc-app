@@ -30,6 +30,7 @@
             <th mat-header-cell *matHeaderCellDef> Acciones </th>
             <td mat-cell *matCellDef="let row; let ind = index">
                 <button mat-button (click)="viewDetails(ind)">Detalles</button>
+                <button mat-button (click)="updateSale(ind)">Editar</button>
                 <button mat-button (click)="deleteSale(ind)">Eliminar</button>
             </td>
         </ng-container>

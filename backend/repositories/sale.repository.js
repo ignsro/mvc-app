@@ -11,7 +11,15 @@ class SaleRepository extends BaseRepository {
     async get(id){
         return this.Sale.findOne({
             where: { id: id },
-            include: this.Detail
+            include: [
+                this.Client,
+                {
+                    model: this.Detail,
+                    include: {
+                        model: this.Product
+                    }
+                }
+            ]
         })
     }
 
@@ -28,6 +36,7 @@ class SaleRepository extends BaseRepository {
             ]
         })
     }
+
 }
 
 module.exports = SaleRepository;

@@ -2,7 +2,7 @@
   <mat-grid-list cols="3" rowHeight="120px">
     <form action="" [formGroup]="onSubmitData" (ngSubmit)="onSubmit()">
       <mat-grid-tile colspan="3">
-        <h3>Registrar venta</h3>
+        <h3>{{title}}</h3>
       </mat-grid-tile>
       <mat-grid-tile colspan="1">
         <mat-form-field appearance="fill">
@@ -76,7 +76,7 @@
           Agregar producto
         </button>
       </mat-grid-tile>
-      <mat-grid-tile colspan="3"  rowspan="2">
+      <mat-grid-tile colspan="3" rowspan="2">
         <table mat-table [dataSource]="detailsTable" class="mat-elevation-z8">
           <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef>Nombre</th>
@@ -104,7 +104,7 @@
           <tr
             mat-row
             *matRowDef="let myRowData; columns: detailsTableColumns"
-            ></tr>
+          ></tr>
           <tr mat-footer-row *matFooterRowDef="detailsTableColumns"></tr>
 
           <ng-container matColumnDef="actions">
@@ -122,10 +122,15 @@
           </ng-container>
         </table>
       </mat-grid-tile>
-      <mat-grid-tile colspan="3">
-          <button type="submit" mat-raised-button color="primary">
-            Finalizar Venta
-          </button>
+      <mat-grid-tile colspan="1">
+        <button type="button" mat-raised-button color="warn" [matDialogClose]>
+          Cancelar
+        </button>
+      </mat-grid-tile>
+      <mat-grid-tile colspan="2">
+        <button type="submit" mat-raised-button color="primary">
+          {{butonSubmitLabel}}
+        </button>
       </mat-grid-tile>
     </form>
   </mat-grid-list>

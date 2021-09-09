@@ -29,19 +29,33 @@ export class SaleComponent implements OnInit {
     private _snackBar: MatSnackBar
   ) { }
 
-  openDialog() {
-    let saleRegistryDailog = this.matDialog.open(RegistrySaleComponent)
+  openDialog(newData: any = null) {
+    let saleRegistryDailog = this.matDialog.open(RegistrySaleComponent, {
+      data: newData
+    })
     
     saleRegistryDailog.afterClosed()
-    .subscribe((data: any) => {
-      if (data.valid) {
-        this._saleService.createSale(data)
-        .subscribe((sale: Sale) => {
-          this.refresh();
-          this.openSnackBar("Venta agregada correctamente!")
-        }, (error: HttpErrorResponse) => {
-          this.openSnackBar("Ocurrio un error!")
-        })
+    .subscribe((result: any) => {
+      if (result.valid) {
+        debugger
+        if (result.edit) {
+          this._saleService.updateSale(result.id, result.data)
+          .subscribe((response) => {
+            this.openSnackBar("Venta actualizada");
+            this.refresh();
+          }, (error: HttpErrorResponse) => {
+            this.openSnackBar("Ocurrio un error al actulizar una venta");
+          })
+        } else {
+          this._saleService.createSale(result)
+          .subscribe((sale: Sale) => {
+            this.refresh();
+            this.openSnackBar("Venta agregada correctamente!")
+          }, (error: HttpErrorResponse) => {
+            this.openSnackBar("Ocurrio un error al crear una venta");
+
+          })
+        }
       }
     })
   }
@@ -70,6 +84,12 @@ export class SaleComponent implements OnInit {
     this.matDialog.open(ViewSaleComponent, {
       data: this.dataTable[rowid]
     })
+  }
+
+
+  updateSale(rowid: any) {
+    const sale = this.dataTable[rowid];
+    this.openDialog(sale)
   }
 
   deleteSale(rowid: any) {

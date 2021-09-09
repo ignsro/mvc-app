@@ -43,11 +43,13 @@ export class ClientComponent implements OnInit {
         if (result.edit) {
           this.clientService.updateClient(result.id, result.data)
           .subscribe((response: any) => {
+            this.openSnackBar("Cliente actualizado!")
             this.refreshTable();
           })
         } else {
           this.clientService.createClient(result.data)
             .subscribe((client: Client) => {
+              this.openSnackBar("Cliente agregado!")
               this.refreshTable()
             }, (error: HttpErrorResponse) => {
               console.log(error)

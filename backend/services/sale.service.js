@@ -26,7 +26,6 @@ class SaleService extends BaseService {
         const subtotalSale = (details.length > 1 ? details.reduce((acc, el) => acc.subtotal + el.subtotal) : details[0].subtotal) - discount;
         const iva = subtotalSale * 0.19;
         const total = subtotalSale * 1.19;
-        console.log(total)
         const sale = await this.respository.create({ iva: iva, discount: discount, total: total, client_id: client_id })
             .then((sale) => {
                 details.forEach(async(detail) => {
@@ -39,6 +38,43 @@ class SaleService extends BaseService {
 
 
         return sale
+    }
+
+    async update(id, data) {
+        const { discount, client_id } = data
+        const details = await Promise.all(data.details.map(async(detail) => {
+            await this.detailRepository.delete(detail.id)
+            const product = await this.productRepository.get(detail.product_id);
+
+            if (!product)
+                throw new Error(`The product with id: ${detail.product_id} is not exists!`)
+
+            if (!product.quantity > 0 || product.quantity < detail.quantity) {
+                throw new Error(`This product ${product.name} is not avaliable`)
+            }
+            const subtotal = product.price * detail.quantity;
+            product.quantity = product.quantity  == detail.quantityOld ? product.quantity : product.quantity + detail.quantityOld;
+            return ({ quantity: detail.quantity, product_id: detail.product_id, subtotal: subtotal, product: product })
+        }))
+
+        const subtotalSale = (details.length > 1 ? details.reduce((acc, el) => acc.subtotal + el.subtotal) : details[0].subtotal) - discount;
+        const iva = subtotalSale * 0.19;
+        const total = subtotalSale * 1.19;
+        
+        const sale = await this.respository.update(id, { iva: iva, discount: discount, total: total, client_id: client_id })
+        .then((sale) => {
+            console.log(sale)
+            details.forEach(async(detail) => {
+                detail.sale_id = sale.id;
+                await this.detailRepository.create(detail)
+                await this.productRepository.updateInstance(detail.product)
+                detail.product.quantity = detail.product.quantity - detail.quantity
+                await this.productRepository.updateInstance(detail.product)
+            })
+            return sale
+        })
+
+        return sale;
     }
 }
 
