@@ -15,6 +15,11 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'sale_id',
         onDelete: 'CASCADE'
       })
+
+      this.belongsTo(models.Product, {
+        foreignKey: 'product_id',
+        alias: 'products'
+      })
     }
   };
   Detail.init({

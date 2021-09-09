@@ -1,7 +1,7 @@
 {
   "development": {
     "username": "root",
-    "password": "onesla2020",
+    "password": "onesla",
     "database": "wherex-app",
     "host": "127.0.0.1",
     "dialect": "mysql"
